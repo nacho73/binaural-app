@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binaural Mind & Body</title>
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #000; --card: #111; --text: #fff; --muted: #888;
+            --delta: #a855f7; --theta: #22c55e; --alpha: #3b82f6; --beta: #f97316;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 20px; max-width: 500px; margin: 0 auto; }
+        header { text-align: center; margin-bottom: 25px; }
+        .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
+        .warning-box { margin-bottom: 20px; position: relative; }
+        .notice { background: #111; padding: 15px; border-radius: 12px; border: 1px solid #333; margin-bottom: 10px; font-size: 0.85rem; text-align: center; line-height: 1.4; }
+        .danger { color: #ff4444; font-size: 0.75rem; text-align: center; font-weight: 600; border: 1px solid #400; padding: 12px; border-radius: 12px; background: rgba(255,0,0,0.05); }
+        .close-btn { position: absolute; top: 5px; right: 12px; cursor: pointer; color: var(--muted); font-size: 1.4rem; z-index: 10; }
+        .player-container { background: linear-gradient(180deg, #151515 0%, #000 100%); border: 1px solid #222; border-radius: 25px; padding: 25px; text-align: center; margin-bottom: 25px; }
+        .active-title { font-size: 1.4rem; font-weight: 600; margin-bottom: 5px; }
+        .active-desc { font-size: 0.8rem; color: var(--muted); margin-bottom: 15px; min-height: 40px; }
+        .timer-ui { margin: 20px 0; }
+        input[type=range] { width: 100%; accent-color: #fff; margin-top: 10px; }
+        .play-btn { width: 70px; height: 70px; border-radius: 50%; border: none; background: #fff; color: #000; font-size: 1.5rem; cursor: pointer; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
+        .mode-card { background: #111; padding: 15px; border-radius: 15px; border: 1px solid #222; cursor: pointer; transition: 0.3s; }
+        .mode-card.selected { border-width: 2px; background: #1a1a1a; }
+        .details { font-size: 0.8rem; background: #080808; padding: 15px; border-radius: 10px; margin-top: 15px; display: none; text-align: left; border-left: 3px solid #fff; line-height: 1.6; }
+        .detail-item { margin-bottom: 10px; }
+        .detail-item b { color: #ddd; display: block; text-transform: uppercase; font-size: 0.7rem; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .quote-box { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; text-align: center; }
+        .quote-text { font-style: italic; font-size: 1rem; margin-bottom: 5px; }
+        .quote-author { color: var(--muted); font-size: 0.8rem; font-weight: 600; }
+               /* Icono de historial en la esquina superior */
+                .history-trigger {
+		position: absolute;
+ 	 	top: 20px;
+                right: 20px;
+                font-size: 1.5rem;
+                cursor: pointer;
+                opacity: 0.7;
+                 } 
+
+          /* Ventana emergente (Modal) */
+              .modal {
+              display: none; 
+              position: fixed;
+              z-index: 100;
+              left: 0; top: 0;
+              width: 100%; height: 100%;
+              background-color: rgba(0,0,0,0.9);
+              align-items: center; justify-content: center;
+               }
+
+          .modal-content {
+           background: #111;
+           padding: 25px;
+           border-radius: 20px;
+           width: 90%;
+           max-width: 400px;
+           border: 1px solid #333;
+           position: relative;
+              }
+
+         .history-item {
+          display: flex;
+          justify-content: space-between;
+          padding: 10px 0;
+          border-bottom: 1px solid #222;
+          font-size: 0.85rem;
+            }
+    </style>
+</head>
+<body>
+<div class="history-trigger" onclick="toggleModal(true)">🕒</div>
+
+<div id="historyModal" class="modal" onclick="if(event.target == this) toggleModal(false)">
+    <div class="modal-content">
+        <span class="close-btn" onclick="toggleModal(false)">×</span>
+        <h3 style="margin-bottom: 20px; color: var(--alpha);">Historial de Sesiones</h3>
+        <div id="history-list-content">
+            </div>
+        <button onclick="clearHistory()" style="background: none; border: none; color: #555; font-size: 0.7rem; cursor: pointer; margin-top: 15px; text-decoration: underline; width: 100%;">
+            Borrar todo el historial
+        </button>
+    </div>
+</div>
+   <header>
+        <h1>Mind & Body</h1>
+        <p class="subtitle">Sonidos binaurales para tu bienestar</p>
+    </header>
+
+    <div id="warning-section" class="warning-box">
+        <span class="close-btn" onclick="this.parentElement.style.display='none'">×</span>
+        <div class="notice">
+            🎧 <b>Cómo usar:</b> Es imprescindible el uso de audífonos para obtener los beneficios.
+        </div>
+        <div class="danger">
+            ⚠️ NO UTILIZAR CONDUCIENDO O SI PADECE EPILEPSIA.
+        </div>
+    </div>
+
+    <div class="player-container">
+        <div class="active-title" id="p-name">Selecciona una frecuencia</div>
+        <div class="active-desc" id="p-desc">Frecuencias: Alpha, Beta, Theta, Delta.</div>
+        <div class="timer-ui">
+            <label>Duración: <span id="t-val">20</span> min</label>
+            <input type="range" id="t-slider" min="5" max="90" step="5" value="20">
+            <div id="elapsed-time" style="margin-top: 10px; font-weight: 600; color: var(--alpha); font-size: 1.2rem; display: none;">
+        00:00
+        </div>
+        <button class="play-btn" id="master-btn" onclick="toggleAudio()">▶</button>
+        <div id="p-details" class="details"></div>
+    </div>
+  </div>
+
+    <div class="grid">
+        <div class="mode-card" id="btn-delta" onclick="setup('delta')" style="border-color: var(--delta)">
+            <h4 style="color:var(--delta)">Delta</h4>
+            <p style="font-size:0.7rem">Regeneración</p>
+        </div>
+        <div class="mode-card" id="btn-theta" onclick="setup('theta')" style="border-color: var(--theta)">
+            <h4 style="color:var(--theta)">Theta</h4>
+            <p style="font-size:0.7rem">Autocuración</p>
+        </div>
+        <div class="mode-card" id="btn-alpha" onclick="setup('alpha')" style="border-color: var(--alpha)">
+            <h4 style="color:var(--alpha)">Alpha</h4>
+            <p style="font-size:0.7rem">Aprendizaje</p>
+        </div>
+        <div class="mode-card" id="btn-beta" onclick="setup('beta')" style="border-color: var(--beta)">
+            <h4 style="color:var(--beta)">Beta</h4>
+            <p style="font-size:0.7rem">Enfoque</p>
+        </div>
+    </div>
+
+    <div class="quote-box">
+        <p class="quote-label" style="font-size: 0.7rem; color: var(--alpha); text-transform: uppercase; letter-spacing: 1px;">Frase del día</p>
+        <p class="quote-text" id="q-txt">Cargando...</p>
+        <p class="quote-author" id="q-author"></p>
+    </div>
+
+    <script>
+        const quotes = [
+            {t: "Si quieres encontrar los secretos del universo, piensa en energía, frecuencia y vibración.", a: "Nikola Tesla"},
+            {t: "La medicina del futuro será la medicina de las frecuencias.", a: "Albert Einstein"},
+            {t: "En todo hombre hay algo que puede ser curado por el sonido.", a: "Pitágoras"},
+            {t: "Tú creas tu propia realidad con tus pensamientos.", a: "Rhonda Byrne"},
+            {t: "La energía fluye hacia donde va la atención.", a: "James Redfield"},
+            {t: "La mejor manera de predecir el futuro es crearlo.", a: "Benjamin Franklin"},
+            {t: "Tanto si crees que puedes como si no, tienes razón.", a: "Henry Ford"},
+            {t: "La imaginación es el principio de la creación.", a: "Neville Goddard"},
+            {t: "Tu cerebro no distingue entre lo que ves y lo que recuerdas.", a: "Joe Dispenza"},
+            {t: "Lo que la mente puede concebir y creer, puede lograrlo.", a: "Napoleon Hill"},
+            {t: "La música es la mediadora entre el mundo espiritual y el de los sentidos.", a: "Ludwig van Beethoven"},
+            {t: "Si quieres sanar el cuerpo, primero debes sanar la mente.", a: "Platón"},
+            {t: "El sonido es la fuerza creativa del universo.", a: "Hazrat Inayat Khan"},
+            {t: "Tu cuerpo es un instrumento, aprende a afinarlo.", a: "Anónimo"},
+            {t: "La vibración de la gratitud es la más poderosa que existe.", a: "Bob Proctor"},
+            {t: "Todo es energía y eso es todo lo que hay.", a: "Darryl Anka"},
+            {t: "La paz mental no es la ausencia de conflicto, sino la presencia de equilibrio.", a: "Deepak Chopra"},
+            {t: "La conciencia es el lenguaje cuántico del universo.", a: "Amit Goswami"},
+            {t: "Donde termina la palabra, comienza la música.", a: "Heinrich Heine"},
+            {t: "Cambiando la frecuencia de tus pensamientos, cambias tu destino.", a: "Wayne Dyer"},
+            {t: "La armonía es la salud; el desequilibrio es la enfermedad.", a: "Hipócrates"},
+            {t: "El silencio es el lienzo donde se dibujan todos los sonidos.", a: "Anónimo"},
+            {t: "Toda enfermedad es un problema de armonía musical fuera de lugar.", a: "Novalis"},
+            {t: "El observador crea la realidad mediante el acto de observar.", a: "Werner Heisenberg"},
+            {t: "Tu mente es un jardín, tus pensamientos son las semillas.", a: "William Wordsworth"},
+            {t: "No somos seres humanos teniendo una experiencia espiritual, somos seres espirituales teniendo una experiencia humana.", a:"Pierre Teilhard de Chardin"},
+            {t: "La intención es el punto de partida de cada sueño.", a: "Deepak Chopra"},
+            {t: "Siente la frecuencia, no solo el sonido.", a: "Bruce Lee"},
+            {t: "La curación es una cuestión de tiempo, pero a veces también es una cuestión de oportunidad.", a: "Hipócrates"},
+            {t: "Para entender el mundo, primero debes entenderte a ti mismo como energía.", a: "Lao Tsé"},
+            {t: "La música es la aritmética de los sonidos, como la óptica es la geometría de la luz.", a: "Claude Debussy"},
+            {t: "Nada está inmóvil; todo se mueve; todo vibra.", a: "El Kybalion"},
+            {t: "La mente lo es todo. En lo que piensas, te conviertes.", a: "Buda"},
+            {t: "El universo no está fuera de ti. Mira dentro de ti mismo; todo lo que quieres, ya lo eres.", a: "Rumi"},
+            {t: "La palabra es un sonido que tiene el poder de crear o destruir.", a: "Miguel Ruiz"},
+            {t: "Nuestra intención crea nuestra realidad.", a: "Wayne Dyer"},
+            {t: "El ritmo es el latido del corazón del universo.", a: "Anónimo"},
+            {t: "La materia es energía condensada a una vibración lenta.", a: "Albert Einstein"},
+            {t: "El pensamiento es una fuerza vibratoria tan real como la luz o la electricidad.", a: "William Walker Atkinson"},
+            {t: "Cada célula de tu cuerpo responde a cada pensamiento que tienes.", a: "Deepak Chopra"},
+            {t: "El sonido tiene la capacidad de reorganizar la estructura molecular.", a: "Masaru Emoto"},
+            {t: "Busca la frecuencia que te haga sentir vivo y sintonízate con ella.", a: "Anónimo"},
+            {t: "La claridad mental es el resultado de una frecuencia equilibrada.", a: "Joe Dispenza"},
+            {t: "El universo es una sinfonía de cuerdas vibrantes.", a: "Michio Kaku"},
+            {t: "No te conviertes en lo que quieres, te conviertes en lo que crees.", a: "Oprah Winfrey"},
+            {t: "La calma interior es el mayor de los poderes.", a: "Konosuke Matsushita"},
+            {t: "Tu vibración es tu firma en el mundo.", a: "Anónimo"},
+            {t: "El secreto de la salud física y mental es no llorar por el pasado, sino vivir el presente sabiamente.", a: "Buda"},
+            {t: "La meditación es el arte de escuchar el sonido del silencio.", a: "Anónimo"},
+            {t: "Sintoniza tu mente con la abundancia y el universo responderá.", a: "Bob Proctor"},
+            {t: "La música es el lenguaje que permite hablar con el más allá.", a: "Robert Schumann"},
+            {t: "Tu visión se aclarará solo cuando puedas mirar en tu propio corazón.", a: "Carl Jung"},
+            {t: "La salud es la mayor posesión. El contento es el mayor tesoro.", a: "Lao Tsé"},
+            {t: "En el principio era el Verbo, y el Verbo era con Dios, y el Verbo era Dios.", a: "Juan 1:1"},
+            {t: "El sonido de la naturaleza es el primer lenguaje del hombre.", a: "Marius Schneider"},
+            {t: "La energía de la mente es la esencia de la vida.", a: "Aristóteles"},
+            {t: "El hombre es lo que piensa todo el día.", a: "Ralph Waldo Emerson"},
+            {t: "Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida.", a: "Proverbios 4:23"},
+            {t: "La música puede cambiar el mundo porque puede cambiar a las personas.", a: "Bono"},
+            {t: "Cualquier cosa que mantengamos en nuestra mente de forma continua es lo que experimentaremos.", a: "Tony Robbins"},
+            {t: "La intuición es el susurro del alma.", a: "Jiddu Krishnamurti"},
+            {t: "Como piensa el hombre en su corazón, así es él.", a: "Proverbios 23:7"},
+            {t: "El cuerpo es el templo del espíritu; mantenlo limpio para que el alma resida en él.", a: "B.K.S. Iyengar"},
+            {t: "La gratitud es la memoria del corazón.", a: "Lao Tsé"},
+            {t: "El pensamiento es la semilla de la acción.", a: "Emerson"},
+            {t: "Panal de miel son las palabras amables: endulzan la vida y dan salud al cuerpo.", a: "Proverbios 16:24"},
+            {t: "La armonía invisible es mayor que la visible.", a: "Heráclito"},
+            {t: "El optimismo es la fe que conduce al logro.", a: "Helen Keller"},
+            {t: "La música limpia el alma del polvo de la vida cotidiana.", a: "Berthold Auerbach"},
+            {t: "La fe viene por el oír, y el oír por la palabra.", a: "Romanos 10:17"},
+            {t: "La vida es una progresión de estados de conciencia.", a: "Neville Goddard"},
+            {t: "El universo es una construcción mental.", a: "The Kybalion"},
+            {t: "Tu frecuencia vibratoria atrae tu realidad.", a: "Joe Dispenza"},
+            {t: "La lámpara del cuerpo es el ojo; si tu ojo es bueno, todo tu cuerpo estará lleno de luz.", a: "Mateo 6:22"},
+            {t: "El sonido es la medicina del futuro.", a: "Edgar Cayce"},
+            {t: "La música es una revelación más alta que toda la sabiduría.", a: "Beethoven"},
+            {t: "Donde hay amor, hay vida.", a: "Mahatma Gandhi"},
+            {t: "Pedid, y se os dará; buscad, y hallaréis; llamad, y se os abrirá.", a: "Mateo 7:7"},
+            {t: "La mente es como un paracaídas, solo funciona si se abre.", a: "Albert Einstein"},
+            {t: "Lo que buscas te está buscando a ti.", a: "Rumi"},
+            {t: "La conciencia es la clave de la curación.", a: "Eckhart Tolle"},
+            {t: "El corazón alegre constituye buen remedio; mas el espíritu triste seca los huesos.", a: "Proverbios 17:22"},
+            {t: "Todo lo que somos es el resultado de lo que hemos pensado.", a: "Buda"},
+            {t: "La paz comienza con una sonrisa.", a: "Madre Teresa"},
+            {t: "El cuerpo nunca miente.", a: "Martha Graham"},
+            {t: "Todo lo que es verdadero, honesto y justo... en esto pensad.", a: "Filipenses 4:8"},
+            {t: "La música es el arte más directo, entra por el oído y va al corazón.", a: "Magdalena Martínez"},
+            {t: "La imaginación lo es todo. Es el avance de las próximas atracciones de la vida.", a: "Albert Einstein"},
+            {t: "El mayor descubrimiento de mi generación es que el hombre puede alterar su vida alterando su actitud.", a: "William James"},
+            {t: "Por la fe entendemos haber sido constituido el universo por la palabra de Dios.", a: "Hebreos 11:3"},
+            {t: "Sana tu mente y tu cuerpo te seguirá.", a: "Anónimo"},
+            {t: "El silencio es el sueño que nutre la sabiduría.", a: "Francis Bacon"},
+            {t: "La alegría es la forma más alta de salud.", a: "Proverbio Chino"},
+            {t: "No te conformes a este mundo, sino transfórmate mediante la renovación de tu mente.", a: "Romanos 12:2"},
+            {t: "La vibración es el lenguaje común de la naturaleza.", a: "Anónimo"},
+            {t: "La música es el vino que llena la copa del silencio.", a: "Robert Fripp"},
+            {t: "Cree que puedes y ya habrás recorrido la mitad del camino.", a: "Theodore Roosevelt"},
+            {t: "El Señor es mi pastor; nada me faltará.", a: "Salmos 23:1"},
+            {t: "La salud es un estado de completa armonía del cuerpo, mente y espíritu.", a: "B.K.S. Iyengar"},
+            {t: "Tu pensamiento es el pincel con el que pintas tu vida.", a: "Anónimo"} 
+        ];
+
+        
+    const data = {
+        delta: { 
+            n: 'Frecuencia Delta (2Hz)', d: 'Regeneración física y descanso profundo.', c: '#a855f7', f: 2,
+            info: [
+                { q: "Cuando", v: "<b>Antes</b> de dormir (para conciliar el sueño)." },
+                { q: "Duración", v: "<b>Sueño profundo:</b> 30 min." },
+                { q: "Visualización", v: "Luz púrpura relajante viajando por tu cuerpo." },
+                { q: "Frecuencia", v: "Una vez al día, preferiblemente en oscuridad total." }
+            ]
+        },
+        theta: { 
+            n: 'Frecuencia Theta (7Hz)', d: 'Autocuración y sueño lúcido.', c: '#22c55e', f: 7,
+            info: [
+                { q: "Cuando", v: "<b>Durante</b> relajación / <b>antes</b> de una siesta/sueño lúcido." },
+                { q: "Duración", v: "<b>Autocuración</b> 20 min. <b>Sueño Lúcido:</b> 45 min. Es más efectivo utilizar la frecuencia tras 5h de sueño y luego volver a dormir." },
+                { q: "Visualización", v: "Para sueño lúcido un paisaje natural donde tú eres el arquitecto. Para autocuración: luz sanadora actúa donde necesitas curación." },
+                { q: "Frecuencia", v: "2-3 veces por semana para  sueños lúcidos. Uan vez al día para autocuración." }
+            ]
+        },
+        alpha: { 
+            n: 'Frecuencia Alpha (10Hz)', d: 'Relajación consciente y aprendizaje.', c: '#3b82f6', f: 10,
+            info: [
+                { q: "Cuando", v: "<b>Antes</b> de estudiar (para preparar la mente) o <b>durante</b> tareas creativas y ligeras." },
+                { q: "Duración", v: "<b>Antes de estudiar</b> 10 min. <b>Durante tareas creativas:</b> 30 min." },
+                { q: "Visualización", v: " (Para antes de estudiar): Fluyendo en un océano de calma azul claro." },
+                { q: "Frecuencia", v: "Según necesidad." }
+            ]
+        },
+        beta: { 
+            n: 'Frecuencia Beta (20Hz)', d: 'Enfoque máximo y agudeza mental.', c: '#f97316', f: 20,
+            info: [
+                { q: "Cuando", v: "<b>Durante</b> el trabajo analítico, resolución de problemas o lectura intensiva." },
+                { q: "Duración", v: "15-20 min." },
+                { q: "Visualización", v: "Ninguna, ya que se requiere el enfoque en la tarea." },
+                { q: "Frecuencia", v: "Máximo 2 veces al día. No usar antes de dormir." }
+            ]
+        }
+    };
+
+        let audioCtx, oscL, oscR, gain, isRunning = false, selected = 'alpha', timerInterval;
+
+    // --- 3. LÓGICA DE CONTROL ---
+    function setup(id, duration = null) {
+        selected = id;
+        if(duration) document.getElementById('t-slider').value = duration;
+        
+        document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
+        document.getElementById('btn-'+id).classList.add('selected');
+        document.getElementById('p-name').innerText = data[id].n;
+        document.getElementById('p-name').style.color = data[id].c;
+        document.getElementById('p-desc').innerText = data[id].d;
+        document.getElementById('t-val').innerText = document.getElementById('t-slider').value;
+        
+        let html = '';
+        data[id].info.forEach(item => {
+            html += `<div class="detail-item"><b>${item.q}:</b> ${item.v}</div>`;
+        });
+        const details = document.getElementById('p-details');
+        details.innerHTML = html;
+        details.style.display = 'block';
+        details.style.borderColor = data[id].c;
+
+        if(isRunning) stop();
+        localStorage.setItem('pref_mode', selected);
+        localStorage.setItem('pref_time', document.getElementById('t-slider').value);
+    }
+
+    function toggleAudio() { isRunning ? stop() : start(); }
+
+    function start() {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        gain = audioCtx.createGain();
+        gain.gain.setValueAtTime(0, audioCtx.currentTime);
+        gain.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 1.5);
+        
+        oscL = audioCtx.createOscillator();
+        const panL = audioCtx.createStereoPanner();
+        oscL.frequency.value = 200; panL.pan.value = -1;
+        oscL.connect(panL).connect(gain);
+        
+        oscR = audioCtx.createOscillator();
+        const panR = audioCtx.createStereoPanner();
+        oscR.frequency.value = 200 + data[selected].f; panR.pan.value = 1;
+        oscR.connect(panR).connect(gain);
+        
+        gain.connect(audioCtx.destination);
+        oscL.start(); oscR.start();
+        isRunning = true;
+        document.getElementById('master-btn').innerText = '⏸';
+        
+        // Reloj Contador
+        const timerDisplay = document.getElementById('elapsed-time');
+        timerDisplay.style.display = 'block';
+        timerDisplay.style.color = data[selected].c;
+        let seconds = 0;
+        clearInterval(timerInterval);
+        timerInterval = setInterval(() => {
+            seconds++;
+            const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+            const secs = (seconds % 60).toString().padStart(2, '0');
+            timerDisplay.innerText = `${mins}:${secs}`;
+        }, 1000);
+
+        saveToHistory(selected, document.getElementById('t-slider').value);
+        
+        const durationMs = document.getElementById('t-slider').value * 60000;
+        setTimeout(() => { if(isRunning) stop(); }, durationMs);
+    }
+
+    function stop() {
+        if(audioCtx) {
+            gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
+            setTimeout(() => { audioCtx.close(); }, 1100);
+        }
+        clearInterval(timerInterval);
+        document.getElementById('elapsed-time').style.display = 'none';
+        document.getElementById('elapsed-time').innerText = '00:00';
+        isRunning = false;
+        document.getElementById('master-btn').innerText = '▶';
+    }
+
+    // --- 4. HISTORIAL ---
+    function toggleModal(show) {
+        document.getElementById('historyModal').style.display = show ? 'flex' : 'none';
+        if(show) renderHistory();
+    }
+
+    function saveToHistory(mode, time) {
+        let history = JSON.parse(localStorage.getItem('binaural_log') || '[]');
+        const now = new Date();
+        const entry = {
+            date: now.toLocaleDateString([], {day:'2-digit', month:'2-digit'}),
+            time: now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+            mode: mode,
+            duration: time
+        };
+        history.unshift(entry);
+        localStorage.setItem('binaural_log', JSON.stringify(history.slice(0, 10)));
+    }
+
+    function renderHistory() {
+        const history = JSON.parse(localStorage.getItem('binaural_log') || '[]');
+        const list = document.getElementById('history-list-content');
+        if(history.length === 0) {
+            list.innerHTML = '<p style="text-align:center; color:#555;">No hay sesiones aún.</p>';
+            return;
+        }
+        list.innerHTML = history.map(item => `
+            <div class="history-item">
+                <span>${item.date} <small style="color:#555">${item.time}</small></span>
+                <span style="color: var(--${item.mode})"><b>${item.mode.toUpperCase()}</b> (${item.duration} min)</span>
+            </div>
+        `).join('');
+    }
+
+    function clearHistory() {
+        if(confirm("¿Borrar todo el historial?")) {
+            localStorage.removeItem('binaural_log');
+            renderHistory();
+        }
+    }
+
+    // --- 5. FRASE DIARIA ---
+    function displayDailyQuote() {
+        const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+        const quote = quotes[dayOfYear % quotes.length];
+        document.getElementById('q-txt').innerText = `"${quote.t}"`;
+        document.getElementById('q-author').innerText = quote.a;
+    }
+
+    window.onload = () => {
+        displayDailyQuote();
+        const lastMode = localStorage.getItem('pref_mode') || 'alpha';
+        const lastTime = localStorage.getItem('pref_time') || '20';
+        setup(lastMode, lastTime);
+        document.getElementById('t-slider').oninput = function() { 
+            document.getElementById('t-val').innerText = this.value;
+            localStorage.setItem('pref_time', this.value);
+        };
+    };
+
+  </script>
+</body>
+</html>
