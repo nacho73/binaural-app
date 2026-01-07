@@ -289,7 +289,7 @@
 
         let audioCtx, oscL, oscR, gain, isRunning = false, selected = 'alpha', timerInterval;
 
-    // --- 3. LÓGICA DE CONTROL ---
+    // --- LÓGICA DE CONTROL ---
     function setup(id, duration = null) {
         selected = id;
         if(duration) document.getElementById('t-slider').value = duration;
@@ -369,7 +369,7 @@
         document.getElementById('master-btn').innerText = '▶';
     }
 
-    // --- 4. HISTORIAL ---
+    // --- HISTORIAL ---
     function toggleModal(show) {
         document.getElementById('historyModal').style.display = show ? 'flex' : 'none';
         if(show) renderHistory();
@@ -434,4 +434,5 @@ if ('serviceWorker' in navigator) {
   </script>
 </body>
 </html>
+
 
