@@ -116,7 +116,7 @@
     </div>
 
     <script>
-        // --- DATA DE FRASES (Tus 100 frases respetadas) ---
+        // --- DATA DE FRASES ---
         const quotes = [
             {t: "Si quieres encontrar los secretos del universo, piensa en energía, frecuencia y vibración.", a: "Nikola Tesla"},
             {t: "La medicina del futuro será la medicina de las frecuencias.", a: "Albert Einstein"},
@@ -144,6 +144,40 @@
             {t: "El observador crea la realidad mediante el acto de observar.", a: "Werner Heisenberg"},
             {t: "Tu mente es un jardín, tus pensamientos son las semillas.", a: "William Wordsworth"},
             {t: "No somos seres humanos teniendo una experiencia espiritual, somos seres espirituales teniendo una experiencia humana.", a:"Pierre Teilhard de Chardin"},
+            {t: "La intención es el punto de partida de cada sueño.", a: "Deepak Chopra"},
+            {t: "Siente la frecuencia, no solo el sonido.", a: "Bruce Lee"},
+            {t: "La curación es una cuestión de tiempo, pero a veces también es una cuestión de oportunidad.", a: "Hipócrates"},
+            {t: "Para entender el mundo, primero debes entenderte a ti mismo como energía.", a: "Lao Tsé"},
+            {t: "La música es la aritmética de los sonidos, como la óptica es la geometría de la luz.", a: "Claude Debussy"},
+            {t: "Nada está inmóvil; todo se mueve; todo vibra.", a: "El Kybalion"},
+            {t: "La mente lo es todo. En lo que piensas, te conviertes.", a: "Buda"},
+            {t: "El universo no está fuera de ti. Mira dentro de ti mismo; todo lo que quieres, ya lo eres.", a: "Rumi"},
+            {t: "La palabra es un sonido que tiene el poder de crear o destruir.", a: "Miguel Ruiz"},
+            {t: "Nuestra intención crea nuestra realidad.", a: "Wayne Dyer"},
+            {t: "El ritmo es el latido del corazón del universo.", a: "Anónimo"},
+            {t: "La materia es energía condensada a una vibración lenta.", a: "Albert Einstein"},
+            {t: "El pensamiento es una fuerza vibratoria tan real como la luz o la electricidad.", a: "William Walker Atkinson"},
+            {t: "Cada célula de tu cuerpo responde a cada pensamiento que tienes.", a: "Deepak Chopra"},
+            {t: "El sonido tiene la capacidad de reorganizar la estructura molecular.", a: "Masaru Emoto"},
+            {t: "Busca la frecuencia que te haga sentir vivo y sintonízate con ella.", a: "Anónimo"},
+            {t: "La claridad mental es el resultado de una frecuencia equilibrada.", a: "Joe Dispenza"},
+            {t: "El universo es una sinfonía de cuerdas vibrantes.", a: "Michio Kaku"},
+            {t: "No te conviertes en lo que quieres, te conviertes en lo que crees.", a: "Oprah Winfrey"},
+            {t: "La calma interior es el mayor de los poderes.", a: "Konosuke Matsushita"},
+            {t: "Tu vibración es tu firma en el mundo.", a: "Anónimo"},
+            {t: "El secreto de la salud física y mental es no llorar por el pasado, sino vivir el presente sabiamente.", a: "Buda"},
+            {t: "La meditación es el arte de escuchar el sonido del silencio.", a: "Anónimo"},
+            {t: "Sintoniza tu mente con la abundancia y el universo responderá.", a: "Bob Proctor"},
+            {t: "La música es el lenguaje que permite hablar con el más allá.", a: "Robert Schumann"},
+            {t: "Tu visión se aclarará solo cuando puedas mirar en tu propio corazón.", a: "Carl Jung"},
+            {t: "La salud es la mayor posesión. El contento es el mayor tesoro.", a: "Lao Tsé"},
+            {t: "En el principio era el Verbo, y el Verbo era con Dios, y el Verbo era Dios.", a: "Juan 1:1"},
+            {t: "El sonido de la naturaleza es el primer lenguaje del hombre.", a: "Marius Schneider"},
+            {t: "La energía de la mente es la esencia de la vida.", a: "Aristóteles"},
+            {t: "El hombre es lo que piensa todo el día.", a: "Ralph Waldo Emerson"},
+            {t: "Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida.", a: "Proverbios 4:23"},
+            {t: "La música puede cambiar el mundo porque puede cambiar a las personas.", a: "Bono"},
+            {t: "Cualquier cosa que mantengamos en nuestra mente de forma continua es lo que experimentaremos.", a: "Tony Robbins"},
             {t: "La intención es el punto de partida de cada sueño.", a: "Deepak Chopra"},
             {t: "Siente la frecuencia, no solo el sonido.", a: "Bruce Lee"},
             {t: "La curación es una cuestión de tiempo, pero a veces también es una cuestión de oportunidad.", a: "Hipócrates"},
@@ -221,108 +255,72 @@
         ];
 
         const data = {
-            delta: { 
-                n: 'Frecuencia Delta (2Hz)', d: 'Regeneración física y descanso profundo.', c: '#a855f7', f: 2,
-                info: [
-                    { q: "Cuando", v: "<b>Antes</b> de dormir." },
-                    { q: "Duración", v: "<b>Sueño profundo:</b> 30 min." },
-                    { q: "Visualización", v: "Luz púrpura relajante." }
-                ]
-            },
-            theta: { 
-                n: 'Frecuencia Theta (7Hz)', d: 'Autocuración y sueño lúcido.', c: '#22c55e', f: 7,
-                info: [
-                    { q: "Cuando", v: "<b>Durante</b> relajación." },
-                    { q: "Duración", v: "<b>Autocuración</b> 20 min." },
-                    { q: "Visualización", v: "Luz sanadora verde." }
-                ]
-            },
-            alpha: { 
-                n: 'Frecuencia Alpha (10Hz)', d: 'Relajación consciente y aprendizaje.', c: '#3b82f6', f: 10,
-                info: [
-                    { q: "Cuando", v: "<b>Antes</b> de estudiar." },
-                    { q: "Duración", v: "<b>Concentración</b> 15 min." },
-                    { q: "Visualización", v: "Océano azul claro." }
-                ]
-            },
-            beta: { 
-                n: 'Frecuencia Beta (20Hz)', d: 'Enfoque máximo y agudeza mental.', c: '#f97316', f: 20,
-                info: [
-                    { q: "Cuando", v: "<b>Durante</b> el trabajo analítico." },
-                    { q: "Duración", v: "15-20 min." },
-                    { q: "Frecuencia", v: "Máximo 2 veces al día." }
-                ]
-            }
+            delta: { n: 'Delta (2Hz)', d: 'Regeneración física profunda.', c: '#a855f7', f: 2 },
+            theta: { n: 'Theta (7Hz)', d: 'Autocuración emocional.', c: '#22c55e', f: 7 },
+            alpha: { n: 'Alpha (10Hz)', d: 'Relajación y aprendizaje.', c: '#3b82f6', f: 10 },
+            beta: { n: 'Beta (20Hz)', d: 'Enfoque y agudeza mental.', c: '#f97316', f: 20 }
         };
 
-        // --- MOTOR DE AUDIO REVISADO (Generativo + Binaural) ---
-        let audioCtx, oscL, oscR, gainBinaural, ambientFilter, isRunning = false, selected = 'alpha', timerInterval, ambientLoop;
+        // --- MOTOR DE AUDIO (RECONSTRUIDO) ---
+        let audioCtx, oscL, oscR, masterGain, ambientFilter;
+        let isRunning = false, selected = 'alpha', timerInterval, ambientLoop;
         let activeNotes = [];
-        const scale = [110.00, 130.81, 146.83, 164.81, 196.00]; // Pentatónica menor La2
+        const scale = [110.0, 130.81, 146.83, 164.81, 196.0]; // A2, C3, D3, E3, G3
 
-        function setup(id, duration = null) {
+        function setup(id) {
             selected = id;
-            if(duration) document.getElementById('t-slider').value = duration;
             document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
             document.getElementById('btn-'+id).classList.add('selected');
             document.getElementById('p-name').innerText = data[id].n;
             document.getElementById('p-name').style.color = data[id].c;
             document.getElementById('p-desc').innerText = data[id].d;
-            document.getElementById('t-val').innerText = document.getElementById('t-slider').value;
             
-            let html = '';
-            data[id].info.forEach(item => html += `<div class="detail-item"><b>${item.q}:</b> ${item.v}</div>`);
-            const details = document.getElementById('p-details');
-            details.innerHTML = html;
-            details.style.display = 'block';
-            details.style.borderColor = data[id].c;
-
             if(isRunning) stop();
             localStorage.setItem('pref_mode', selected);
-            localStorage.setItem('pref_time', document.getElementById('t-slider').value);
         }
-
-        function toggleAudio() { isRunning ? stop() : start(); }
 
         async function start() {
             if (isRunning) return;
             
+            // Forzar creación de contexto
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             if (audioCtx.state === 'suspended') await audioCtx.resume();
 
-            // IMPORTANTE: Definimos isRunning antes para que el loop ambiental no se cancele
             isRunning = true;
 
-            // 1. Capa Binaural
-            gainBinaural = audioCtx.createGain();
-            gainBinaural.gain.setValueAtTime(0, audioCtx.currentTime);
-            gainBinaural.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 2);
-            
+            // 1. Capa Binaural (Master Gain para control total)
+            masterGain = audioCtx.createGain();
+            masterGain.gain.setValueAtTime(0, audioCtx.currentTime);
+            masterGain.gain.linearRampToValueAtTime(0.3, audioCtx.currentTime + 1);
+            masterGain.connect(audioCtx.destination);
+
             oscL = audioCtx.createOscillator();
             const panL = audioCtx.createStereoPanner();
-            oscL.frequency.value = 180; panL.pan.value = -1;
-            oscL.connect(panL).connect(gainBinaural);
+            oscL.frequency.setValueAtTime(180, audioCtx.currentTime); 
+            panL.pan.setValueAtTime(-1, audioCtx.currentTime);
+            oscL.connect(panL).connect(masterGain);
             
             oscR = audioCtx.createOscillator();
             const panR = audioCtx.createStereoPanner();
-            oscR.frequency.value = 180 + data[selected].f; panR.pan.value = 1;
-            oscR.connect(panR).connect(gainBinaural);
+            oscR.frequency.setValueAtTime(180 + data[selected].f, audioCtx.currentTime); 
+            panR.pan.setValueAtTime(1, audioCtx.currentTime);
+            oscR.connect(panR).connect(masterGain);
             
-            gainBinaural.connect(audioCtx.destination);
             oscL.start(); oscR.start();
 
-            // 2. Capa Ambiental Generativa
+            // 2. Capa Ambiental MELÓDICA
             ambientFilter = audioCtx.createBiquadFilter();
             ambientFilter.type = "lowpass";
-            ambientFilter.frequency.value = 450; 
+            ambientFilter.frequency.setValueAtTime(600, audioCtx.currentTime); 
             ambientFilter.connect(audioCtx.destination);
             
-            playAmbientNote(); // Iniciar la melodía
+            // Lanzamos la primera nota INMEDIATAMENTE
+            playAmbientNote(); 
 
             document.getElementById('master-btn').innerText = '⏸';
             document.getElementById('elapsed-time').style.display = 'block';
             
-            // Reloj Contador
+            // Reloj
             let seconds = 0;
             clearInterval(timerInterval);
             timerInterval = setInterval(() => {
@@ -333,8 +331,7 @@
             }, 1000);
 
             saveToHistory(selected, document.getElementById('t-slider').value);
-            const durationMs = document.getElementById('t-slider').value * 60000;
-            setTimeout(() => { if(isRunning) stop(); }, durationMs);
+            setTimeout(() => { if(isRunning) stop(); }, document.getElementById('t-slider').value * 60000);
         }
 
         function playAmbientNote() {
@@ -345,29 +342,30 @@
                 const osc = audioCtx.createOscillator();
                 const g = audioCtx.createGain();
 
-                osc.type = 'sawtooth';
-                osc.frequency.value = freq;
+                osc.type = 'triangle'; // Cambiado a triangle para que sea más audible pero suave
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
 
                 const now = audioCtx.currentTime;
+                // RESET DE VOLUMEN EXPLÍCITO (Soluciona problemas en móviles)
                 g.gain.setValueAtTime(0, now);
-                g.gain.linearRampToValueAtTime(0.12, now + 4); // Volumen melódico suave
-                g.gain.linearRampToValueAtTime(0, now + 9);
+                g.gain.linearRampToValueAtTime(0.4, now + 3); // VOLUMEN ALTO PARA QUE SE OIGA
+                g.gain.linearRampToValueAtTime(0, now + 8);
 
                 osc.connect(g).connect(ambientFilter);
                 osc.start(now);
-                osc.stop(now + 10);
+                osc.stop(now + 9);
 
                 const id = Date.now();
                 activeNotes.push(id);
                 osc.onended = () => {
+                    activeNotes = activeNotes.filter(n => n !== id);
                     g.disconnect();
                     osc.disconnect();
-                    activeNotes = activeNotes.filter(n => n !== id);
                 };
             }
 
-            // Programar siguiente nota (cada 3-6 segundos)
-            ambientLoop = setTimeout(playAmbientNote, 3000 + Math.random() * 3000);
+            // Ritmo más rápido para que la melodía sea constante
+            ambientLoop = setTimeout(playAmbientNote, 2500 + Math.random() * 2000);
         }
 
         function stop() {
@@ -376,13 +374,8 @@
             clearInterval(timerInterval);
 
             if(audioCtx) {
-                if(gainBinaural) gainBinaural.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1.5);
-                setTimeout(() => { 
-                    if(audioCtx) {
-                        audioCtx.close(); 
-                        audioCtx = null;
-                    }
-                }, 1600);
+                if(masterGain) masterGain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
+                setTimeout(() => { if(audioCtx) { audioCtx.close(); audioCtx = null; } }, 1200);
             }
             
             document.getElementById('elapsed-time').style.display = 'none';
@@ -390,7 +383,9 @@
             activeNotes = [];
         }
 
-        // --- HISTORIAL Y UI ---
+        function toggleAudio() { isRunning ? stop() : start(); }
+
+        // --- HISTORIAL ---
         function toggleModal(show) {
             document.getElementById('historyModal').style.display = show ? 'flex' : 'none';
             if(show) renderHistory();
@@ -398,12 +393,10 @@
 
         function saveToHistory(mode, time) {
             let history = JSON.parse(localStorage.getItem('binaural_log') || '[]');
-            const now = new Date();
             history.unshift({
-                date: now.toLocaleDateString([], {day:'2-digit', month:'2-digit'}),
-                time: now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-                mode: mode,
-                duration: time
+                date: new Date().toLocaleDateString([], {day:'2-digit', month:'2-digit'}),
+                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
+                mode: mode, duration: time
             });
             localStorage.setItem('binaural_log', JSON.stringify(history.slice(0, 10)));
         }
@@ -411,39 +404,20 @@
         function renderHistory() {
             const history = JSON.parse(localStorage.getItem('binaural_log') || '[]');
             const list = document.getElementById('history-list-content');
-            if(history.length === 0) {
-                list.innerHTML = '<p style="text-align:center; color:#555;">No hay sesiones aún.</p>';
-                return;
-            }
-            list.innerHTML = history.map(item => `
-                <div class="history-item">
-                    <span>${item.date} <small style="color:#555">${item.time}</small></span>
-                    <span style="color: var(--${item.mode})"><b>${item.mode.toUpperCase()}</b> (${item.duration} min)</span>
-                </div>
-            `).join('');
+            list.innerHTML = history.length === 0 ? '<p>No hay sesiones.</p>' : 
+                history.map(item => `<div class="history-item"><span>${item.date}</span><span style="color:var(--${item.mode})">${item.mode.toUpperCase()} (${item.duration}m)</span></div>`).join('');
         }
 
-        function clearHistory() {
-            if(confirm("¿Borrar todo el historial?")) {
-                localStorage.removeItem('binaural_log');
-                renderHistory();
-            }
-        }
+        function clearHistory() { if(confirm("¿Borrar?")) { localStorage.removeItem('binaural_log'); renderHistory(); } }
 
-        function displayDailyQuote() {
+        window.onload = () => {
             const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
             const quote = quotes[dayOfYear % quotes.length];
             document.getElementById('q-txt').innerText = `"${quote.t}"`;
             document.getElementById('q-author').innerText = quote.a;
-        }
 
-        window.onload = () => {
-            displayDailyQuote();
-            setup(localStorage.getItem('pref_mode') || 'alpha', localStorage.getItem('pref_time') || '20');
-            document.getElementById('t-slider').oninput = function() { 
-                document.getElementById('t-val').innerText = this.value;
-                localStorage.setItem('pref_time', this.value);
-            };
+            setup(localStorage.getItem('pref_mode') || 'alpha');
+            document.getElementById('t-slider').oninput = function() { document.getElementById('t-val').innerText = this.value; };
         };
     </script>
 </body>
