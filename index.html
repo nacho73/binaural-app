@@ -35,24 +35,10 @@
         .quote-box { margin-top: 30px; border-top: 1px solid #222; padding-top: 20px; text-align: center; }
         .quote-text { font-style: italic; font-size: 1rem; margin-bottom: 5px; }
         .quote-author { color: var(--muted); font-size: 0.8rem; font-weight: 600; }
-        
         .history-trigger { position: absolute; top: 20px; right: 20px; font-size: 1.5rem; cursor: pointer; opacity: 0.7; } 
-
-        .modal {
-            display: none; position: fixed; z-index: 100; left: 0; top: 0;
-            width: 100%; height: 100%; background-color: rgba(0,0,0,0.9);
-            align-items: center; justify-content: center;
-        }
-
-        .modal-content {
-            background: #111; padding: 25px; border-radius: 20px; width: 90%;
-            max-width: 400px; border: 1px solid #333; position: relative;
-        }
-
-        .history-item {
-            display: flex; justify-content: space-between; padding: 10px 0;
-            border-bottom: 1px solid #222; font-size: 0.85rem;
-        }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9); align-items: center; justify-content: center; }
+        .modal-content { background: #111; padding: 25px; border-radius: 20px; width: 90%; max-width: 400px; border: 1px solid #333; position: relative; }
+        .history-item { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #222; font-size: 0.85rem; }
     </style>
 </head>
 <body>
@@ -63,9 +49,7 @@
         <span class="close-btn" onclick="toggleModal(false)">×</span>
         <h3 style="margin-bottom: 20px; color: var(--alpha);">Historial de Sesiones</h3>
         <div id="history-list-content"></div>
-        <button onclick="clearHistory()" style="background: none; border: none; color: #555; font-size: 0.7rem; cursor: pointer; margin-top: 15px; text-decoration: underline; width: 100%;">
-            Borrar todo el historial
-        </button>
+        <button onclick="clearHistory()" style="background: none; border: none; color: #555; font-size: 0.7rem; cursor: pointer; margin-top: 15px; text-decoration: underline; width: 100%;">Borrar todo el historial</button>
     </div>
 </div>
 
@@ -76,17 +60,13 @@
 
 <div id="warning-section" class="warning-box">
     <span class="close-btn" onclick="this.parentElement.style.display='none'">×</span>
-    <div class="notice">
-        🎧 <b>Cómo usar:</b> Es imprescindible el uso de audífonos para obtener los beneficios.
-    </div>
-    <div class="danger">
-        ⚠️ NO UTILIZAR CONDUCIENDO O SI PADECE EPILEPSIA.
-    </div>
+    <div class="notice">🎧 <b>Cómo usar:</b> Es imprescindible el uso de audífonos.</div>
+    <div class="danger">⚠️ NO UTILIZAR CONDUCIENDO O SI PADECE EPILEPSIA.</div>
 </div>
 
 <div class="player-container">
-    <div class="active-title" id="p-name">Selecciona una frecuencia</div>
-    <div class="active-desc" id="p-desc">Frecuencias: Alpha, Beta, Theta, Delta.</div>
+    <div class="active-title" id="p-name">Selecciona frecuencia</div>
+    <div class="active-desc" id="p-desc">Alpha, Beta, Theta, Delta.</div>
     <div class="timer-ui">
         <label>Duración: <span id="t-val">20</span> min</label>
         <input type="range" id="t-slider" min="5" max="90" step="5" value="20">
@@ -97,26 +77,14 @@
 </div>
 
 <div class="grid">
-    <div class="mode-card" id="btn-delta" onclick="setup('delta')" style="border-color: var(--delta)">
-        <h4 style="color:var(--delta)">Delta</h4>
-        <p style="font-size:0.7rem">Regeneración</p>
-    </div>
-    <div class="mode-card" id="btn-theta" onclick="setup('theta')" style="border-color: var(--theta)">
-        <h4 style="color:var(--theta)">Theta</h4>
-        <p style="font-size:0.7rem">Autocuración</p>
-    </div>
-    <div class="mode-card" id="btn-alpha" onclick="setup('alpha')" style="border-color: var(--alpha)">
-        <h4 style="color:var(--alpha)">Alpha</h4>
-        <p style="font-size:0.7rem">Aprendizaje</p>
-    </div>
-    <div class="mode-card" id="btn-beta" onclick="setup('beta')" style="border-color: var(--beta)">
-        <h4 style="color:var(--beta)">Beta</h4>
-        <p style="font-size:0.7rem">Enfoque</p>
-    </div>
+    <div class="mode-card" id="btn-delta" onclick="setup('delta')" style="border-color: var(--delta)"><h4 style="color:var(--delta)">Delta</h4><p style="font-size:0.7rem">Regeneración</p></div>
+    <div class="mode-card" id="btn-theta" onclick="setup('theta')" style="border-color: var(--theta)"><h4 style="color:var(--theta)">Theta</h4><p style="font-size:0.7rem">Autocuración</p></div>
+    <div class="mode-card" id="btn-alpha" onclick="setup('alpha')" style="border-color: var(--alpha)"><h4 style="color:var(--alpha)">Alpha</h4><p style="font-size:0.7rem">Aprendizaje</p></div>
+    <div class="mode-card" id="btn-beta" onclick="setup('beta')" style="border-color: var(--beta)"><h4 style="color:var(--beta)">Beta</h4><p style="font-size:0.7rem">Enfoque</p></div>
 </div>
 
 <div class="quote-box">
-    <p class="quote-label" style="font-size: 0.7rem; color: var(--alpha); text-transform: uppercase; letter-spacing: 1px;">Frase del día</p>
+    <p class="quote-label" style="font-size: 0.7rem; color: var(--alpha); text-transform: uppercase;">Frase del día</p>
     <p class="quote-text" id="q-txt">Cargando...</p>
     <p class="quote-author" id="q-author"></p>
 </div>
@@ -226,42 +194,10 @@
     ];
 
     const data = {
-        delta: { 
-            n: 'Frecuencia Delta (2Hz)', d: 'Regeneración física y descanso profundo.', c: '#a855f7', f: 2,
-            info: [
-                { q: "Cuando", v: "<b>Antes</b> de dormir." },
-                { q: "Duración", v: "<b>Sueño profundo:</b> 30 min." },
-                { q: "Visualización", v: "Luz púrpura relajante." },
-                { q: "Frecuencia", v: "Una vez al día." }
-            ]
-        },
-        theta: { 
-            n: 'Frecuencia Theta (7Hz)', d: 'Autocuración y sueño lúcido.', c: '#22c55e', f: 7,
-            info: [
-                { q: "Cuando", v: "<b>Durante</b> relajación profunda." },
-                { q: "Duración", v: "<b>Autocuración</b> 20 min." },
-                { q: "Visualización", v: "Luz sanadora verde." },
-                { q: "Frecuencia", v: "2-3 veces por semana." }
-            ]
-        },
-        alpha: { 
-            n: 'Frecuencia Alpha (10Hz)', d: 'Relajación consciente y aprendizaje.', c: '#3b82f6', f: 10,
-            info: [
-                { q: "Cuando", v: "<b>Antes</b> de estudiar o tareas creativas." },
-                { q: "Duración", v: "<b>Concentración:</b> 15 min." },
-                { q: "Visualización", v: "Océano de calma azul." },
-                { q: "Frecuencia", v: "Según necesidad." }
-            ]
-        },
-        beta: { 
-            n: 'Frecuencia Beta (20Hz)', d: 'Enfoque máximo y agudeza mental.', c: '#f97316', f: 20,
-            info: [
-                { q: "Cuando", v: "<b>Durante</b> el trabajo analítico." },
-                { q: "Duración", v: "15-20 min." },
-                { q: "Visualización", v: "Enfoque en la tarea." },
-                { q: "Frecuencia", v: "Máximo 2 veces al día." }
-            ]
-        }
+        delta: { n: 'Delta (2Hz)', d: 'Regeneración física profunda.', c: '#a855f7', f: 2, base: 144, info: [{q:"Uso",v:"Antes de dormir."}] },
+        theta: { n: 'Theta (7Hz)', d: 'Autocuración emocional.', c: '#22c55e', f: 7, base: 144, info: [{q:"Uso",v:"Relajación profunda."}] },
+        alpha: { n: 'Alpha (10Hz)', d: 'Relajación y aprendizaje.', c: '#3b82f6', f: 10, base: 200, info: [{q:"Uso",v:"Estudio o creatividad."}] },
+        beta: { n: 'Beta (20Hz)', d: 'Enfoque y agudeza mental.', c: '#f97316', f: 20, base: 200, info: [{q:"Uso",v:"Trabajo analítico."}] }
     };
 
     let audioCtx, oscL, oscR, gain, isRunning = false, selected = 'alpha', timerInterval;
@@ -288,49 +224,50 @@
         localStorage.setItem('pref_time', document.getElementById('t-slider').value);
     }
 
-    function toggleAudio() { isRunning ? stop() : start(); }
-
-    function start() {
+    async function start() {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') await audioCtx.resume();
+
         gain = audioCtx.createGain();
         gain.gain.setValueAtTime(0, audioCtx.currentTime);
-        gain.gain.linearRampToValueAtTime(0.4, audioCtx.currentTime + 1.5);
-        
-        oscL = audioCtx.createOscillator();
-        const panL = audioCtx.createStereoPanner();
-        oscL.frequency.value = 200; panL.pan.value = -1;
-        oscL.connect(panL).connect(gain);
-        
-        oscR = audioCtx.createOscillator();
-        const panR = audioCtx.createStereoPanner();
-        oscR.frequency.value = 200 + data[selected].f; panR.pan.value = 1;
-        oscR.connect(panR).connect(gain);
-        
+        gain.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 1.5);
         gain.connect(audioCtx.destination);
+
+        const merger = audioCtx.createChannelMerger(2);
+        merger.connect(gain);
+
+        const base = data[selected].base;
+
+        oscL = audioCtx.createOscillator();
+        oscL.frequency.value = base;
+        oscL.connect(merger, 0, 0); // Canal Izquierdo
+
+        oscR = audioCtx.createOscillator();
+        oscR.frequency.value = base + data[selected].f;
+        oscR.connect(merger, 0, 1); // Canal Derecho
+
         oscL.start(); oscR.start();
         isRunning = true;
         document.getElementById('master-btn').innerText = '⏸';
+        document.getElementById('elapsed-time').style.display = 'block';
         
-        const timerDisplay = document.getElementById('elapsed-time');
-        timerDisplay.style.display = 'block';
-        let seconds = 0;
+        let secs = 0;
         clearInterval(timerInterval);
         timerInterval = setInterval(() => {
-            seconds++;
-            const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
-            const secs = (seconds % 60).toString().padStart(2, '0');
-            timerDisplay.innerText = `${mins}:${secs}`;
+            secs++;
+            const m = Math.floor(secs / 60).toString().padStart(2, '0');
+            const s = (secs % 60).toString().padStart(2, '0');
+            document.getElementById('elapsed-time').innerText = `${m}:${s}`;
         }, 1000);
 
         saveToHistory(selected, document.getElementById('t-slider').value);
-        const durationMs = document.getElementById('t-slider').value * 60000;
-        setTimeout(() => { if(isRunning) stop(); }, durationMs);
+        setTimeout(() => { if(isRunning) stop(); }, document.getElementById('t-slider').value * 60000);
     }
 
     function stop() {
         if(audioCtx) {
             gain.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
-            setTimeout(() => { audioCtx.close(); }, 1100);
+            setTimeout(() => { if(audioCtx) audioCtx.close(); }, 1100);
         }
         clearInterval(timerInterval);
         document.getElementById('elapsed-time').style.display = 'none';
@@ -338,59 +275,34 @@
         document.getElementById('master-btn').innerText = '▶';
     }
 
+    function toggleAudio() { isRunning ? stop() : start(); }
+
     function toggleModal(show) {
         document.getElementById('historyModal').style.display = show ? 'flex' : 'none';
         if(show) renderHistory();
     }
 
     function saveToHistory(mode, time) {
-        let history = JSON.parse(localStorage.getItem('binaural_log') || '[]');
-        const now = new Date();
-        history.unshift({
-            date: now.toLocaleDateString([], {day:'2-digit', month:'2-digit'}),
-            time: now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
-            mode: mode,
-            duration: time
-        });
-        localStorage.setItem('binaural_log', JSON.stringify(history.slice(0, 10)));
+        let h = JSON.parse(localStorage.getItem('binaural_log') || '[]');
+        h.unshift({ date: new Date().toLocaleDateString(), mode: mode.toUpperCase(), duration: time });
+        localStorage.setItem('binaural_log', JSON.stringify(h.slice(0, 10)));
     }
 
     function renderHistory() {
-        const history = JSON.parse(localStorage.getItem('binaural_log') || '[]');
-        const list = document.getElementById('history-list-content');
-        if(history.length === 0) {
-            list.innerHTML = '<p style="text-align:center; color:#555;">No hay sesiones aún.</p>';
-            return;
-        }
-        list.innerHTML = history.map(item => `
-            <div class="history-item">
-                <span>${item.date} <small style="color:#555">${item.time}</small></span>
-                <span style="color: var(--${item.mode})"><b>${item.mode.toUpperCase()}</b> (${item.duration} min)</span>
-            </div>
-        `).join('');
+        const h = JSON.parse(localStorage.getItem('binaural_log') || '[]');
+        document.getElementById('history-list-content').innerHTML = h.length === 0 ? '<p>Sin sesiones.</p>' : 
+            h.map(i => `<div class="history-item"><span>${i.date}</span><span>${i.mode} (${i.duration}m)</span></div>`).join('');
     }
 
-    function clearHistory() {
-        if(confirm("¿Borrar todo el historial?")) {
-            localStorage.removeItem('binaural_log');
-            renderHistory();
-        }
-    }
-
-    function displayDailyQuote() {
-        const dayOfYear = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
-        const quote = quotes[dayOfYear % quotes.length];
-        document.getElementById('q-txt').innerText = `"${quote.t}"`;
-        document.getElementById('q-author').innerText = quote.a;
-    }
+    function clearHistory() { if(confirm("¿Borrar?")) { localStorage.removeItem('binaural_log'); renderHistory(); } }
 
     window.onload = () => {
-        displayDailyQuote();
+        const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
+        const q = quotes[day % quotes.length];
+        document.getElementById('q-txt').innerText = `"${q.t}"`;
+        document.getElementById('q-author').innerText = q.a;
         setup(localStorage.getItem('pref_mode') || 'alpha', localStorage.getItem('pref_time') || '20');
-        document.getElementById('t-slider').oninput = function() { 
-            document.getElementById('t-val').innerText = this.value;
-            localStorage.setItem('pref_time', this.value);
-        };
+        document.getElementById('t-slider').oninput = function() { document.getElementById('t-val').innerText = this.value; };
     };
 </script>
 </body>
