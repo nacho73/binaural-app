@@ -66,7 +66,7 @@
 
 <div class="player-container">
     <div class="active-title" id="p-name">Selecciona frecuencia</div>
-    <div class="active-desc" id="p-desc">Alpha, Beta, Theta, Delta.</div>
+    <div class="active-desc" id="p-desc">Frecuencias: Alpha, Beta, Theta, Delta.</div>
     <div class="timer-ui">
         <label>Duración: <span id="t-val">20</span> min</label>
         <input type="range" id="t-slider" min="5" max="90" step="5" value="20">
@@ -195,7 +195,7 @@
 
     const data = {
         delta: { 
-            n: 'Frecuencia Delta (2Hz)', d: 'Regeneración física y descanso profundo.', c: '#a855f7', f: 2, base: 110,
+            n: 'Frecuencia Delta (2Hz)', d: 'Regeneración física y descanso profundo.', c: '#a855f7', f: 2, base: 150,
             info: [
                 { q: "Cuando", v: "<b>Antes</b> de dormir (para conciliar el sueño)." },
                 { q: "Duración", v: "<b>Sueño profundo:</b> 30 min." },
@@ -204,7 +204,7 @@
             ]
         },
         theta: { 
-            n: 'Frecuencia Theta (7Hz)', d: 'Autocuración y sueño lúcido.', c: '#22c55e', f: 7, base: 120,
+            n: 'Frecuencia Theta (7Hz)', d: 'Autocuración y sueño lúcido.', c: '#22c55e', f: 7, base: 150,
             info: [
                 { q: "Cuando", v: "<b>Durante</b> relajación / <b>antes</b> de una siesta/sueño lúcido." },
                 { q: "Duración", v: "<b>Autocuración</b> 20 min. <b>Sueño Lúcido:</b> 45 min." },
@@ -264,8 +264,8 @@
 
         gain = audioCtx.createGain();
         gain.gain.setValueAtTime(0, audioCtx.currentTime);
-        // Volumen subido a 0.8 para compensar frecuencias bajas
-        gain.gain.linearRampToValueAtTime(0.8, audioCtx.currentTime + 1.5);
+        // Volumen regresado a 0.5 (suave)
+        gain.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 1.5);
         gain.connect(audioCtx.destination);
 
         const merger = audioCtx.createChannelMerger(2);
@@ -277,10 +277,9 @@
         oscL = audioCtx.createOscillator();
         oscR = audioCtx.createOscillator();
 
-        // AJUSTE CLAVE: Usar ondas triangulares para Delta y Theta (audibilidad en móvil)
-        const waveType = beat < 10 ? 'triangle' : 'sine';
-        oscL.type = waveType;
-        oscR.type = waveType;
+        // ONDAS SINE PARA TODOS (Máxima suavidad/Alpha-like)
+        oscL.type = 'sine';
+        oscR.type = 'sine';
 
         oscL.frequency.value = base;
         oscL.connect(merger, 0, 0); 
@@ -342,7 +341,7 @@
         const day = Math.floor((new Date() - new Date(new Date().getFullYear(), 0, 0)) / 86400000);
         const q = quotes[day % quotes.length];
         document.getElementById('q-txt').innerText = `"${q.t}"`;
-        document.getElementById('q-author').innerText = q.a;
+        document.getElementById('q-author').innerText = quote.a;
         setup(localStorage.getItem('pref_mode') || 'alpha', localStorage.getItem('pref_time') || '20');
         document.getElementById('t-slider').oninput = function() { document.getElementById('t-val').innerText = this.value; };
     };
