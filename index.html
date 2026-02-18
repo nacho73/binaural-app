@@ -12,7 +12,7 @@
             --bg: #000; --card: #111; --text: #fff; --muted: #888;
             --delta: #a855f7; --theta: #22c55e; --alpha: #3b82f6; --beta: #f97316;
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); padding: 20px; max-width: 500px; margin: 0 auto; }
         header { text-align: center; margin-bottom: 25px; }
         .subtitle { color: var(--muted); font-size: 0.9rem; margin-bottom: 20px; }
@@ -24,7 +24,7 @@
         .active-title { font-size: 1.4rem; font-weight: 600; margin-bottom: 5px; }
         .active-desc { font-size: 0.8rem; color: var(--muted); margin-bottom: 15px; min-height: 40px; }
         .timer-ui { margin: 20px 0; }
-        input[type=range] { width: 100%; accent-color: #fff; margin-top: 10px; }
+        input[type=range] { width: 100%; accent-color: #fff; margin-top: 10px; cursor: pointer; }
         .play-btn { width: 70px; height: 70px; border-radius: 50%; border: none; background: #fff; color: #000; font-size: 1.5rem; cursor: pointer; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 25px; }
         .mode-card { background: #111; padding: 15px; border-radius: 15px; border: 1px solid #222; cursor: pointer; transition: 0.3s; }
@@ -90,6 +90,7 @@
 </div>
 
 <script>
+    // --- FRASES COMPLETAS RESPETADAS ---
     const quotes = [
         {t: "Si quieres encontrar los secretos del universo, piensa en energía, frecuencia y vibración.", a: "Nikola Tesla"},
         {t: "La medicina del futuro será la medicina de las frecuencias.", a: "Albert Einstein"},
@@ -117,6 +118,74 @@
         {t: "El observador crea la realidad mediante el acto de observar.", a: "Werner Heisenberg"},
         {t: "Tu mente es un jardín, tus pensamientos son las semillas.", a: "William Wordsworth"},
         {t: "No somos seres humanos teniendo una experiencia espiritual, somos seres espirituales teniendo una experiencia humana.", a:"Pierre Teilhard de Chardin"},
+        {t: "La intención es el punto de partida de cada sueño.", a: "Deepak Chopra"},
+        {t: "Siente la frecuencia, no solo el sonido.", a: "Bruce Lee"},
+        {t: "La curación es una cuestión de tiempo, pero a veces también es una cuestión de oportunidad.", a: "Hipócrates"},
+        {t: "Para entender el mundo, primero debes entenderte a ti mismo como energía.", a: "Lao Tsé"},
+        {t: "La música es la aritmética de los sonidos, como la óptica es la geometría de la luz.", a: "Claude Debussy"},
+        {t: "Nada está inmóvil; todo se mueve; todo vibra.", a: "El Kybalion"},
+        {t: "La mente lo es todo. En lo que piensas, te conviertes.", a: "Buda"},
+        {t: "El universo no está fuera de ti. Mira dentro de ti mismo; todo lo que quieres, ya lo eres.", a: "Rumi"},
+        {t: "La palabra es un sonido que tiene el poder de crear o destruir.", a: "Miguel Ruiz"},
+        {t: "Nuestra intención crea nuestra realidad.", a: "Wayne Dyer"},
+        {t: "El ritmo es el latido del corazón del universo.", a: "Anónimo"},
+        {t: "La materia es energía condensada a una vibración lenta.", a: "Albert Einstein"},
+        {t: "El pensamiento es una fuerza vibratoria tan real como la luz o la electricidad.", a: "William Walker Atkinson"},
+        {t: "Cada célula de tu cuerpo responde a cada pensamiento que tienes.", a: "Deepak Chopra"},
+        {t: "El sonido tiene la capacidad de reorganizar la estructura molecular.", a: "Masaru Emoto"},
+        {t: "Busca la frecuencia que te haga sentir vivo y sintonízate con ella.", a: "Anónimo"},
+        {t: "La claridad mental es el resultado de una frecuencia equilibrada.", a: "Joe Dispenza"},
+        {t: "El universo es una sinfonía de cuerdas vibrantes.", a: "Michio Kaku"},
+        {t: "No te conviertes en lo que quieres, te conviertes en lo que crees.", a: "Oprah Winfrey"},
+        {t: "La calma interior es el mayor de los poderes.", a: "Konosuke Matsushita"},
+        {t: "Tu vibración es tu firma en el mundo.", a: "Anónimo"},
+        {t: "El secreto de la salud física y mental es no llorar por el pasado, sino vivir el presente sabiamente.", a: "Buda"},
+        {t: "La meditación es el arte de escuchar el sonido del silencio.", a: "Anónimo"},
+        {t: "Sintoniza tu mente con la abundancia y el universo responderá.", a: "Bob Proctor"},
+        {t: "La música es el lenguaje que permite hablar con el más allá.", a: "Robert Schumann"},
+        {t: "Tu visión se aclarará solo cuando puedas mirar en tu propio corazón.", a: "Carl Jung"},
+        {t: "La salud es la mayor posesión. El contento es el mayor tesoro.", a: "Lao Tsé"},
+        {t: "En el principio era el Verbo, y el Verbo era con Dios, y el Verbo era Dios.", a: "Juan 1:1"},
+        {t: "El sonido de la naturaleza es el primer lenguaje del hombre.", a: "Marius Schneider"},
+        {t: "La energía de la mente es la esencia de la vida.", a: "Aristóteles"},
+        {t: "El hombre es lo que piensa todo el día.", a: "Ralph Waldo Emerson"},
+        {t: "Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida.", a: "Proverbios 4:23"},
+        {t: "La música puede cambiar el mundo porque puede cambiar a las personas.", a: "Bono"},
+        {t: "Cualquier cosa que mantengamos en nuestra mente de forma continua es lo que experimentaremos.", a: "Tony Robbins"},
+        {t: "La intención es el punto de partida de cada sueño.", a: "Deepak Chopra"},
+        {t: "Siente la frecuencia, no solo el sonido.", a: "Bruce Lee"},
+        {t: "La curación es una cuestión de tiempo, pero a veces también es una cuestión de oportunidad.", a: "Hipócrates"},
+        {t: "Para entender el mundo, primero debes entenderte a ti mismo como energía.", a: "Lao Tsé"},
+        {t: "La música es la aritmética de los sonidos, como la óptica es la geometría de la luz.", a: "Claude Debussy"},
+        {t: "Nada está inmóvil; todo se mueve; todo vibra.", a: "El Kybalion"},
+        {t: "La mente lo es todo. En lo que piensas, te conviertes.", a: "Buda"},
+        {t: "El universo no está fuera de ti. Mira dentro de ti mismo; todo lo que quieres, ya lo eres.", a: "Rumi"},
+        {t: "La palabra es un sonido que tiene el poder de crear o destruir.", a: "Miguel Ruiz"},
+        {t: "Nuestra intención crea nuestra realidad.", a: "Wayne Dyer"},
+        {t: "El ritmo es el latido del corazón del universo.", a: "Anónimo"},
+        {t: "La materia es energía condensada a una vibración lenta.", a: "Albert Einstein"},
+        {t: "El pensamiento es una fuerza vibratoria tan real como la luz o la electricidad.", a: "William Walker Atkinson"},
+        {t: "Cada célula de tu cuerpo responde a cada pensamiento que tienes.", a: "Deepak Chopra"},
+        {t: "El sonido tiene la capacidad de reorganizar la estructura molecular.", a: "Masaru Emoto"},
+        {t: "Busca la frecuencia que te haga sentir vivo y sintonízate con ella.", a: "Anónimo"},
+        {t: "La claridad mental es el resultado de una frecuencia equilibrada.", a: "Joe Dispenza"},
+        {t: "El universo es una sinfonía de cuerdas vibrantes.", a: "Michio Kaku"},
+        {t: "No te conviertes en lo que quieres, te conviertes en lo que crees.", a: "Oprah Winfrey"},
+        {t: "La calma interior es el mayor de los poderes.", a: "Konosuke Matsushita"},
+        {t: "Tu vibración es tu firma en el mundo.", a: "Anónimo"},
+        {t: "El secreto de la salud física y mental es no llorar por el pasado, sino vivir el presente sabiamente.", a: "Buda"},
+        {t: "La meditación es el arte de escuchar el sonido del silencio.", a: "Anónimo"},
+        {t: "Sintoniza tu mente con la abundancia y el universo responderá.", a: "Bob Proctor"},
+        {t: "La música es el lenguaje que permite hablar con el más allá.", a: "Robert Schumann"},
+        {t: "Tu visión se aclarará solo cuando puedas mirar en tu propio corazón.", a: "Carl Jung"},
+        {t: "La salud es la mayor posesión. El contento es el mayor tesoro.", a: "Lao Tsé"},
+        {t: "En el principio era el Verbo, y el Verbo era con Dios, y el Verbo era Dios.", a: "Juan 1:1"},
+        {t: "El sonido de la naturaleza es el primer lenguaje del hombre.", a: "Marius Schneider"},
+        {t: "La energía de la mente es la esencia de la vida.", a: "Aristóteles"},
+        {t: "El hombre es lo que piensa todo el día.", a: "Ralph Waldo Emerson"},
+        {t: "Sobre toda cosa guardada, guarda tu corazón; porque de él mana la vida.", a: "Proverbios 4:23"},
+        {t: "La música puede cambiar el mundo porque puede cambiar a las personas.", a: "Bono"},
+        {t: "Cualquier cosa que mantengamos en nuestra mente de forma continua es lo que experimentaremos.", a: "Tony Robbins"},
         {t: "La intención es el punto de partida de cada sueño.", a: "Deepak Chopra"},
         {t: "Siente la frecuencia, no solo el sonido.", a: "Bruce Lee"},
         {t: "La curación es una cuestión de tiempo, pero a veces también es una cuestión de oportunidad.", a: "Hipócrates"},
@@ -194,10 +263,42 @@
     ];
 
     const data = {
-        delta: { n: 'Delta (2Hz)', d: 'Regeneración física profunda.', c: '#a855f7', f: 2, base: 144, info: [{q:"Uso",v:"Antes de dormir."}] },
-        theta: { n: 'Theta (7Hz)', d: 'Autocuración emocional.', c: '#22c55e', f: 7, base: 144, info: [{q:"Uso",v:"Relajación profunda."}] },
-        alpha: { n: 'Alpha (10Hz)', d: 'Relajación y aprendizaje.', c: '#3b82f6', f: 10, base: 200, info: [{q:"Uso",v:"Estudio o creatividad."}] },
-        beta: { n: 'Beta (20Hz)', d: 'Enfoque y agudeza mental.', c: '#f97316', f: 20, base: 200, info: [{q:"Uso",v:"Trabajo analítico."}] }
+        delta: { 
+            n: 'Frecuencia Delta (2Hz)', d: 'Regeneración física y descanso profundo.', c: '#a855f7', f: 2, base: 144,
+            info: [
+                { q: "Cuando", v: "<b>Antes</b> de dormir (para conciliar el sueño)." },
+                { q: "Duración", v: "<b>Sueño profundo:</b> 30 min." },
+                { q: "Visualización", v: "Luz púrpura relajante viajando por tu cuerpo." },
+                { q: "Frecuencia", v: "Una vez al día, preferiblemente en oscuridad total." }
+            ]
+        },
+        theta: { 
+            n: 'Frecuencia Theta (7Hz)', d: 'Autocuración y sueño lúcido.', c: '#22c55e', f: 7, base: 144,
+            info: [
+                { q: "Cuando", v: "<b>Durante</b> relajación / <b>antes</b> de una siesta/sueño lúcido." },
+                { q: "Duración", v: "<b>Autocuración</b> 20 min. <b>Sueño Lúcido:</b> 45 min." },
+                { q: "Visualización", v: "Luz sanadora verde o paisaje donde eres el arquitecto." },
+                { q: "Frecuencia", v: "2-3 veces por semana o diario para autocuración." }
+            ]
+        },
+        alpha: { 
+            n: 'Frecuencia Alpha (10Hz)', d: 'Relajación consciente y aprendizaje.', c: '#3b82f6', f: 10, base: 200,
+            info: [
+                { q: "Cuando", v: "<b>Antes</b> de estudiar o <b>durante</b> tareas creativas." },
+                { q: "Duración", v: "<b>Antes de estudiar</b> 10 min. <b>Durante tareas:</b> 30 min." },
+                { q: "Visualización", v: "Fluyendo en un océano de calma azul claro." },
+                { q: "Frecuencia", v: "Según necesidad." }
+            ]
+        },
+        beta: { 
+            n: 'Frecuencia Beta (20Hz)', d: 'Enfoque máximo y agudeza mental.', c: '#f97316', f: 20, base: 200,
+            info: [
+                { q: "Cuando", v: "<b>Durante</b> el trabajo analítico o lectura intensiva." },
+                { q: "Duración", v: "15-20 min." },
+                { q: "Visualización", v: "Ninguna, enfoque total en la tarea." },
+                { q: "Frecuencia", v: "Máximo 2 veces al día. No usar antes de dormir." }
+            ]
+        }
     };
 
     let audioCtx, oscL, oscR, gain, isRunning = false, selected = 'alpha', timerInterval;
@@ -205,6 +306,7 @@
     function setup(id, duration = null) {
         selected = id;
         if(duration) document.getElementById('t-slider').value = duration;
+        
         document.querySelectorAll('.mode-card').forEach(c => c.classList.remove('selected'));
         document.getElementById('btn-'+id).classList.add('selected');
         document.getElementById('p-name').innerText = data[id].n;
@@ -213,7 +315,9 @@
         document.getElementById('t-val').innerText = document.getElementById('t-slider').value;
         
         let html = '';
-        data[id].info.forEach(item => html += `<div class="detail-item"><b>${item.q}:</b> ${item.v}</div>`);
+        data[id].info.forEach(item => {
+            html += `<div class="detail-item"><b>${item.q}:</b> ${item.v}</div>`;
+        });
         const details = document.getElementById('p-details');
         details.innerHTML = html;
         details.style.display = 'block';
@@ -233,6 +337,7 @@
         gain.gain.linearRampToValueAtTime(0.5, audioCtx.currentTime + 1.5);
         gain.connect(audioCtx.destination);
 
+        // Sistema de fusión de canales (Fijo para Theta/Delta)
         const merger = audioCtx.createChannelMerger(2);
         merger.connect(gain);
 
@@ -240,11 +345,11 @@
 
         oscL = audioCtx.createOscillator();
         oscL.frequency.value = base;
-        oscL.connect(merger, 0, 0); // Canal Izquierdo
+        oscL.connect(merger, 0, 0); 
 
         oscR = audioCtx.createOscillator();
         oscR.frequency.value = base + data[selected].f;
-        oscR.connect(merger, 0, 1); // Canal Derecho
+        oscR.connect(merger, 0, 1); 
 
         oscL.start(); oscR.start();
         isRunning = true;
