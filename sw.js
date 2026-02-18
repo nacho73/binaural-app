@@ -1,4 +1,4 @@
-const CACHE_NAME = 'binaural-v12';
+const CACHE_NAME = 'binaural-v13';
 const assets = ['./', './index.html', './manifest.json', './icon.png'];
 
 self.addEventListener('install', e => {
